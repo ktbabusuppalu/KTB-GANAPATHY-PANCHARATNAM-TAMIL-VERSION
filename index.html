@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>கணபதி பஞ்சரத்னம் அர்த்தத்துடன்</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 15px;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* Password Overlay Styles */
+        #password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .password-box {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            border: 1px solid #333;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+        .password-box h2 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .password-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .password-box button {
+            background: linear-gradient(135deg, #ff9933, #ff6600);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+        /* Main Container hidden until unlocked */
+        #main-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            border: 1px solid #333;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 1089px;
+            height: auto;
+            aspect-ratio: 1089 / 597;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 3px solid #ff9933;
+            box-shadow: 0 4px 15px rgba(255,153,51,0.3);
+            display: block;
+            margin: 0 auto;
+        }
+        .audio-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .audio-container audio {
+            width: 100%;
+            max-width: 450px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+        .caption-banner {
+            text-align: center;
+            background: linear-gradient(135deg, #ff9933, #ff6600);
+            color: #000;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(255,153,51,0.4);
+        }
+        .dedication {
+            text-align: center;
+            color: #00ffcc;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .verse-box {
+            background: #2a2a2a;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9933;
+        }
+        .verse-title {
+            color: #ffcc00;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .verse-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            white-space: pre-line;
+            color: #f0f0f0;
+        }
+        .verse-meaning {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #b0c4de;
+            border-top: 1px dashed #444;
+            padding-top: 6px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #ff9933;
+            font-weight: bold;
+            border-top: 1px solid #444;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Password Protection Overlay -->
+    <div id="password-overlay">
+        <div class="password-box">
+            <h2>Enter Password</h2>
+            <input type="password" id="passcode" placeholder="Enter page password" onkeypress="checkEnter(event)">
+            <button onclick="unlockPage()">Submit</button>
+            <div id="error-msg" class="error-msg">Incorrect password. Try again!</div>
+        </div>
+    </div>
+
+    <!-- Main Webpage Content (Initially Hidden) -->
+    <div id="main-content">
+        <div class="container">
+            <div class="caption-banner">கணபதி பஞ்சரத்னம் அர்த்தத்துடன்[cite: 1]</div>
+            
+            <!-- Lord Ganesha Image Display (1089x597 Rectangular Scale) -->
+            <div class="image-container">
+                <img src="https://github.com/ktbabusuppalu/KTB-GANAPATHYPANCHA-RATNAM-TELUGU-VERSION/blob/main/TELUGUGP%20IMAGE%20PRINT.png?raw=true" alt="Ganapathy Pancharatnam Print">
+            </div>
+
+            <!-- Audio Player connected via GitHub Raw Link -->
+            <div class="audio-container">
+                <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #ffcc00;">பஞ்சரத்ன ஆடியோ கேட்க:</p>
+                <audio controls preload="metadata">
+                    <source src="https://github.com/ktbabusuppalu/KTB-GANAPATHYPANCHA-RATNAM-TELUGU-VERSION/raw/main/TELUGU%20GANAPATHY%20PANCHARATNAM.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <h1>ஸ்ரீ கணேச பஞ்சரத்னம்[cite: 1]</h1>
+            <div class="dedication">தமிழ் மக்களுக்கு அர்ப்பணம்[cite: 1]</div>
+
+            <!-- முதல் பாடல் -->
+            <div class="verse-box">
+                <div class="verse-title">முதல் பாடல்[cite: 1]</div>
+                <div class="verse-text">கையில் மோதகம் ஏந்திய கமலக் கரத்தானே முத்தியையும் ஆனந்தத்தையும் தருபவனே!
+பிறைமதிச் சூடிய சற்புருதர்களை (நல்லோர்களை) ரட்சிப்பவரே, விநாயக உந்தன் பாதம் வேண்டுகிறேன்![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> கையில் மோதகத்தை ஏந்தியவரே, முக்தியையும் ஆனந்தத்தையும் தருபவரே, பிறைச்சந்திரனைச் சூடிய சற்புருதர்களை (நல்லோர்களை) ரட்சிப்பவரே, விநாயகப் பெருமானே உமது பாதங்களை வேண்டுகிறேன்.[cite: 1]</div>
+            </div>
+
+            <!-- இரண்டாம் பாடல் -->
+            <div class="verse-box">
+                <div class="verse-title">இரண்டாம் பாடல்[cite: 1]</div>
+                <div class="verse-text">பிறைமதிச் சூடிய பிரகாச வடிவினன் குறைகள் யாவும் கொன்றழிக்கும் கரத்தினன்!
+மறைகளின் முடிவினில் நடமாடும் அரசன் இறைவனை உனை இருதயத்தில் வைப்பனே![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> பிறைமதி சூடிய பிரகாசமான வடிவினரே, குறைகள் அனைத்தையும் அழிக்கும் கரங்களை உடையவரே, வேதங்களின் முடிவில் நடமாடும் அரசனே, இறைவனே உன்னை என் இதயத்தில் வைத்துப் போற்றுவேன்.[cite: 1]</div>
+            </div>
+
+            <!-- மூன்றாம் பாடல் -->
+            <div class="verse-box">
+                <div class="verse-title">மூன்றாம் பாடல்[cite: 1]</div>
+                <div class="verse-text">அகில லோகமும் மங்களம் பெறச் செய்பவா நிகரில் அசுரரை வென்றுயிர் காப்பவா!
+முகில்கொள் தொப்பையைக் கொண்டநல் மூர்த்தியே புகழும் கஞ்சமும் தந்துனைப் போற்றுவேனே![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> அகில உலகமும் மங்களம் பெறச் செய்பவரே, நிகரற்ற அசுரர்களை வென்று உயிர்களைக் காப்பவரே, பெரிய தொப்பையைக் கொண்ட நல்ல மூர்த்தியே, புகழும் தாமரையும் தந்து உன்னைப் போற்றுகிறேன்.[cite: 1]</div>
+            </div>
+
+            <!-- நான்காம் பாடல் -->
+            <div class="verse-box">
+                <div class="verse-title">நான்காம் பாடல்[cite: 1]</div>
+                <div class="verse-text">எளியோர் துயரங்கள் யாவும் போக்குவா ஒளிசேர் வேதத்தின் உட்கருப் பொருளே!
+புலியின் தோலாடை ஈசனின் மைந்தனே கலிபோம் நாளும் உன்பாதம் பணிவேனே![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> எளியோரின் துயரங்கள் அனைத்தையும் போக்குபவரே, ஒளிமிக்க வேதங்களின் உட்பொருளே, புலித்தோல் ஆடை அணிந்த ஈசனின் மைந்தனே, கலியுகத் துயரம் நீங்க உந்தன் பாதங்களை எப்போதும் பணிகிறேன்.[cite: 1]</div>
+            </div>
+
+            <!-- ஐந்தாம் பாடல் -->
+            <div class="verse-box">
+                <div class="verse-title">ஐந்தாம் பாடல்[cite: 1]</div>
+                <div class="verse-text">ஒளிரும் ஒற்றைக் கொம்பினைக் கொண்டவனே அழிவில்லா ஈசனின் அன்பு மைந்தனே!
+யோகியர் நெஞ்சகத் தின்பம் தருபவனே ஏகந்தா உன்னை எப்போதும் தொழுவேனே![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> ஒளிரும் ஒற்றைக் கொம்பைக் கொண்டவரே, அழிவில்லாத ஈசனின் அன்பு மைந்தனே, யோகியர்களின் நெஞ்சில் இன்பம் தருபவரே, ஏகதந்தா உன்னை எப்போதும் தொழுவேன்.[cite: 1]</div>
+            </div>
+
+            <!-- பலஸ்ருதி -->
+            <div class="verse-box">
+                <div class="verse-title">பலஸ்ருதி[cite: 1]</div>
+                <div class="verse-text">பஞ்சரத்னங்களை நெஞ்சில் பதித்துமே விடியற்காலத்தில் போற்றித் தொழுபவர்!
+பிணியகன்று ஓங்க ஆயுளும் ஐஸ்வர்யமும் அஞ்சிதமாய் வாழ்வில் சீக்கிரமாய் பெறுவாரே![cite: 1]</div>
+                <div class="verse-meaning"><strong>அர்த்தம்:[cite: 1]</strong> இந்தப் பஞ்சரத்னங்களை நெஞ்சில் பதித்து, விடியற்காலத்தில் போற்றித் தொழுபவர்கள் பிணிகள் நீங்கி, ஆயுளும் ஐஸ்வர்யமும் பெற்று வாழ்வில் சீக்கிரமே சிறப்படைவார்கள்.[cite: 1]</div>
+            </div>
+
+            <div class="footer">
+                சகோதரிகள் மோனிஸ்ரீ, லதா மற்றும் தாம்பரம் பமினி[cite: 1]
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "Ganesha123";
+
+        function unlockPage() {
+            const enteredPass = document.getElementById("passcode").value;
+            const errorMsg = document.getElementById("error-msg");
+
+            if (enteredPass === correctPassword) {
+                document.getElementById("password-overlay").style.display = "none";
+                document.getElementById("main-content").style.display = "flex";
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                unlockPage();
+            }
+        }
+    </script>
+</body>
+</html>
